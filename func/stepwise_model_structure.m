@@ -1,4 +1,4 @@
-function [k,A,Log] = stepwise_model_structure(A,X,z,y,stop_critera)
+function [k,A,Log] = stepwise_model_structure(A,X,z,stop_criteria, plot_report)
 %% Stepwise regression
 %  Stepwise model structure selection.
 %  The F test is used to judge which candidate regressor should be added to the
@@ -13,15 +13,17 @@ function [k,A,Log] = stepwise_model_structure(A,X,z,y,stop_critera)
 %      regressors. 
 %  X : candidate regressors. 
 %  z : measurement. 
-%
+%  stop_criteria: 'PSE', 'R2', 'F0'
+%  plot_report: bool value to determine if plot the estimation result.
+
 %  output:
 %  k : parameters estimated corresponding to each regressor
 %  A : final regressor matrix
 %  Log : log for stepwise selection. 2nd column records the index of
 %        selected regressor from candidate pool. 3rd column records the 
 %        index of eliminated regressor from existing regressors.
-%        4th and 5the column records the PSE and R2 of current model.
-%        6th column records the rms of residual.
+%        4-7th columns respectively record the PSE, R2, F0 and RMS of 
+%        current model.
 %
 %  Sihao Sun  21-Apr-2017
 %  S.Sun-4@tudelft.nl
@@ -34,6 +36,7 @@ step = 1;
 
 [N,p0] = size(A);
 p = p0;
+[~,y] = OLS(A,z);
 PSE = find_PSE(y,z,p);
 R2 = find_R2(y,z);
 F0 = (N-p)/(p-1)*R2/(1-R2);
@@ -46,6 +49,10 @@ A_last = A;
 display(PSE);
 display(R2);
 
+if plot_report
+   figure
+   plot(z); hold on;
+end
 while 1    
     Log = [Log;zeros(1,7)];
     Log(step,1) = step;
@@ -85,15 +92,17 @@ while 1
     if out == true
         Xout = A(:,i);
         A(:,i) = [];
-%         X = [X,Xout];        
     else
         Xout = [];
     end
-%     out = false;
-%     Xout = [];
+
     %least square
     [k,y] = OLS(A,z);
     
+    if plot_report
+        plot(y);
+    end
+
     fprintf('------------Step = %d -------------\n',step);
     fprintf('\nselected = %d\n',j);
 %     display(k);
@@ -101,7 +110,8 @@ while 1
     if out == true 
         fprintf('Kick out --> %d\n',i);
         Log(step,3) = i;
-    end;
+    end
+    
     
     %stopping criteria
     p = size(A,2);
@@ -118,7 +128,7 @@ while 1
     display(PSE);
     display(R2);
     
-    switch stop_critera
+    switch stop_criteria
         case 'PSE'
             if PSE >= PSE_last*0.99
                 A = A_last;
@@ -157,4 +167,5 @@ while 1
     
     step = step + 1;
 end
+
 end
