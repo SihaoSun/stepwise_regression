@@ -1,16 +1,34 @@
 # Introduction
-This is a Matlab function running forward-backward stepwise regression algorithm to fit given N data points. The identified model is in the form of
+This is a Matlab function running stepwise regression algorithm to fit given N data points. The identified model is in the form of
 
  Y = \Sum {k_i * P_i(x)}
  
 - Y (Nx1) is the model output.
 - x (Nxm) are m dimentional model inputs. 
-- P_i(x) is the ith regressor as any form of function of x.
+- P_i(x) is the ith regressor as an arbitrary function of x.
 - k_i is the coefficient of the ith regressor.
 
-By providing a candidate pool (dictionary) of P_i(x), this algorithm can select P_i(x) from the pool and identify the coefficients.
+By providing a dictionary of candidate P_i(x), this algorithm selects P_i(x) from the dictionary and identify their coefficients for minimizing least square data fitting errors. 
 
-# Platform
+If you use this code in an academic context, please cite
+
+```
+@article{GrayboxSun2018,
+author = {Sun, Sihao and de Visser, Coen C. and Chu, Qiping},
+doi = {10.2514/1.C035135},
+issn = {0021-8669},
+journal = {Journal of Aircraft},
+month = {mar},
+number = {2},
+pages = {645--661},
+title = {{Quadrotor Gray-Box Model Identification from High-Speed Flight Data}},
+url = {https://arc.aiaa.org/doi/10.2514/1.C035135},
+volume = {56},
+year = {2019}
+}
+```
+
+# Tested Platform
 Matlab 2019a
 
 Matlab signal processing toolbox
