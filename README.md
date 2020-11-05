@@ -13,19 +13,15 @@ By providing a dictionary of candidate P_i(x), this algorithm selects P_i(x) fro
 If you use this code in an academic context, please cite
 
 ```
-@article{GrayboxSun2018,
-author = {Sun, Sihao and de Visser, Coen C. and Chu, Qiping},
-doi = {10.2514/1.C035135},
-issn = {0021-8669},
-journal = {Journal of Aircraft},
-month = {mar},
-number = {2},
-pages = {645--661},
-title = {{Quadrotor Gray-Box Model Identification from High-Speed Flight Data}},
-url = {https://arc.aiaa.org/doi/10.2514/1.C035135},
-volume = {56},
-year = {2019}
-}
+@ARTICLE{SunIncremental2020,
+  author={S. {Sun} and X. {Wang} and Q. {Chu} and C. d. {Visser}},
+  journal={IEEE Transactions on Robotics}, 
+  title={Incremental Nonlinear Fault-Tolerant Control of a Quadrotor With Complete Loss of Two Opposing Rotors}, 
+  year={2020},
+  volume={},
+  number={},
+  pages={1-15},
+  doi={10.1109/TRO.2020.3010626}}
 ```
 
 # Tested Platform
